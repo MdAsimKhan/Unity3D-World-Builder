@@ -15,12 +15,16 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        // if the player clicks, invoke the OnClicked event
         if (Input.GetMouseButtonDown(0))
             OnClicked?.Invoke();
+
+        // if the player presses escape, invoke the OnExit event
         if (Input.GetKeyDown(KeyCode.Escape))
             OnExit?.Invoke();
     }
 
+    // check if the mouse is over a UI element
     public bool IsPointerOverUI() => EventSystem.current.IsPointerOverGameObject();
 
     public Vector3 GetSelectedMapPosition()

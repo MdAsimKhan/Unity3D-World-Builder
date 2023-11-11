@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,8 +37,11 @@ public class PlayerController : MonoBehaviour
 
     #endregion
     #region Variables: Animation
+
     private Animator animator;
+
     #endregion
+
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
@@ -60,11 +62,12 @@ public class PlayerController : MonoBehaviour
         {
             _velocity = -1.0f;
         }
-        else
+        else // if not grounded, apply gravity
         {
             _velocity += _gravity * gravityMultiplier * Time.deltaTime;
         }
 
+        // apply the changed the velocity
         _direction.y = _velocity;
     }
 
@@ -73,8 +76,8 @@ public class PlayerController : MonoBehaviour
         if (_input.sqrMagnitude == 0) return;
 
         _direction = Quaternion.Euler(0.0f, _mainCamera.transform.eulerAngles.y, 0.0f) * new Vector3(_input.x, 0.0f, _input.y);
-        var targetRotation = Quaternion.LookRotation(_direction, Vector3.up);
 
+        var targetRotation = Quaternion.LookRotation(_direction, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
@@ -82,7 +85,6 @@ public class PlayerController : MonoBehaviour
     {
         var targetSpeed = movement.isSprinting ? movement.speed * movement.multiplier : movement.speed;
         movement.currentSpeed = Mathf.MoveTowards(movement.currentSpeed, targetSpeed, movement.acceleration * Time.deltaTime);
-
         _characterController.Move(movement.currentSpeed * Time.deltaTime * _direction);
     }
 
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         _input = context.ReadValue<Vector2>();
         _direction = new Vector3(_input.x, 0.0f, _input.y);
-        
+
         if (context.started || context.performed)
         {
             animator.SetBool("isWalking", true);
