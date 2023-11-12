@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        // if the player clicks, invoke the OnClicked event
+        // if the player clicks left mouse button, invoke the OnClicked event
         if (Input.GetMouseButtonDown(0))
             OnClicked?.Invoke();
 
