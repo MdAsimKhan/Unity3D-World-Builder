@@ -14,6 +14,12 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private ObjectsDatabaseSO database;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip audioClip;
+
     private int selectedObject = -1;
 
     private void Start()
@@ -76,6 +82,7 @@ public class PlacementSystem : MonoBehaviour
 
         // instantiate the object at the cell position from the SO DB
         GameObject newObject = Instantiate(database.objectsData[selectedObject].Prefab);
+        audioSource.PlayOneShot(audioClip);
 
         // set the object's position to the cell's world position
         newObject.transform.position = grid.CellToWorld(gridPosition);
